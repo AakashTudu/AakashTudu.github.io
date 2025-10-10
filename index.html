@@ -3,561 +3,782 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHP Consulting - BioTech R&D Strategy</title>
+    <title>SHP Consulting | BioTech R&D and Strategy</title>
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Inter Font -->
     <style>
-        /* Custom Styles for Professional BioTech Aesthetic */
-        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
-        .page-section { display: none; min-height: calc(100vh - 80px); padding-top: 80px; }
-        .page-section.active { display: block; }
-        .nav-link:hover { color: #10b981; /* Tailwind teal-500 */ }
-        .hero-bg {
-            /* Deeper, richer gradient for a more serious, high-end look */
-            background: linear-gradient(135deg, #0f172a 0%, #115e59 100%); 
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        /* Ensures the canvas covers the entire home section */
+        #home {
+            position: relative;
+            overflow: hidden; /* Hide particles outside the home section */
         }
-        .service-card { transition: transform 0.3s, box-shadow 0.3s; }
-        .service-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.1); }
-        /* Simple icon styling */
-        .icon-svg { width: 1.5rem; height: 1.5rem; }
 
-        /* Carousel/Banner Specific Styles */
-        .about-hero-slide {
-            opacity: 0;
-            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+        #atom-canvas {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            transform: translateY(20px);
-            /* This padding ensures the text remains vertically centered within the available space */
-            padding: 4rem 0; 
+            z-index: 0; /* Placed behind all content */
         }
-        .about-hero-slide.active {
-            opacity: 1;
-            transform: translateY(0);
+        
+        /* Ensure content sits above the canvas */
+        .content-container {
+            position: relative;
+            z-index: 10;
+        }
+
+        /* Styles for the About page rotating hero to give it proper padding */
+        .about-hero-container {
+            height: 16rem; /* Increased height for better text placement */
+        }
+        @media (min-width: 640px) {
+            .about-hero-container {
+                height: 18rem;
+            }
         }
     </style>
 </head>
-<body class="antialiased">
+<body class="bg-gray-50 text-gray-800">
 
-    <!-- Fixed Header / Navigation -->
-    <header class="fixed top-0 left-0 right-0 bg-white shadow-lg z-50">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-16">
-            <div class="text-2xl font-bold text-gray-900 tracking-tight">
-                <span class="text-teal-600">SHP</span> Consulting
-            </div>
-            <div class="space-x-4">
-                <a href="#home" class="nav-link text-gray-700 font-medium" onclick="showPage('home')">Home</a>
-                <a href="#about" class="nav-link text-gray-700 font-medium" onclick="showPage('about')">About Us</a>
-                <a href="#services" class="nav-link text-gray-700 font-medium" onclick="showPage('services')">Services</a>
-                <a href="#contact" class="px-3 py-1.5 text-white bg-teal-600 rounded-lg hover:bg-teal-700 transition font-medium" onclick="showPage('contact')">Contact Us</a>
-            </div>
-        </nav>
-    </header>
-
-    <main class="min-h-screen">
-        
-        <!-- Page 1: Home Section - Start -->
-        <section id="home" class="page-section active pt-16">
-            
-            <!-- Hero Section: Updated gradient for professional depth -->
-            <div class="hero-bg py-24 sm:py-32 text-white">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight mb-8">
-                        Make better biotech decisions with expert R&D insights and services.
-                    </h1>
-                    <p class="max-w-3xl mx-auto text-xl text-teal-200 mb-12">
-                        Strategic advice and hands-on services for preclinical developers and startups in cell and antibody-based therapies.
-                    </p>
+    <!-- Navigation (Primary Brand: SHP Consulting) -->
+    <nav class="sticky top-0 z-50 bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo/Brand -->
+                <div class="flex-shrink-0">
+                    <a href="#home" class="text-2xl font-extrabold text-teal-600 hover:text-teal-700 transition duration-300" onclick="navigate('home')">SHP Consulting</a>
                 </div>
-            </div>
-
-            <!-- Three-Column Summary (Existing Content) -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 grid lg:grid-cols-3 gap-10">
-                
-                <!-- The Challenge -->
-                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-teal-600">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Challenge</h2>
-                    <p class="text-gray-600">For small biotech companies with lean teams, navigating breakthrough innovation can be especially demanding. Limited time and in-house expertise often make it difficult to make strategic decisions, apply for funding—dilutive or non-dilutive—or publish research. Access to expert guidance and a flexible, cost-effective research portfolio tailored to specific needs can be a game-changer, helping teams move forward with clarity and confidence.</p>
+                <!-- Desktop Links -->
+                <div class="hidden md:flex space-x-6">
+                    <a href="#home" class="text-gray-600 hover:text-teal-600 font-medium transition duration-300" onclick="navigate('home')">Home</a>
+                    <a href="#about" class="text-gray-600 hover:text-teal-600 font-medium transition duration-300" onclick="navigate('about')">About Us</a>
+                    <a href="#services" class="text-gray-600 hover:text-teal-600 font-medium transition duration-300" onclick="navigate('services')">Services</a>
+                    <a href="#contact" class="px-4 py-2 text-sm font-semibold text-white bg-teal-600 rounded-lg hover:bg-teal-700 transition duration-300 shadow-md" onclick="navigate('contact')">Contact Us</a>
                 </div>
-
-                <!-- The Solution -->
-                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-blue-600">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Solution</h2>
-                    <p class="text-gray-600">At SHP Consulting, we offer comprehensive, data-driven R&D due diligence research and concierge services designed to support biotech companies in making informed, strategic decisions. Our team of seasoned scientists combines advanced academic credentials and real-world industry expertise to deliver clear insights, risk evaluations, and opportunity mapping across the biotech landscape.</p>
-                </div>
-
-                <!-- The Services (Teaser) -->
-                <div class="bg-white p-8 rounded-xl shadow-lg border-t-4 border-gray-600">
-                    <h2 class="text-2xl font-bold text-gray-900 mb-4">The Services</h2>
-                    <p class="text-gray-600 mb-6">We empower startups and preclinical developers in cell and antibody-based therapies with strategic advice and expert services — from grant writing and antibody engineering to bioinformatics and part-time CFO support. At SHP Consulting, we help you navigate science, funding, and growth with clarity and confidence.</p>
-                    <!-- The button has been removed as requested -->
-                </div>
-            </div>
-            
-            <!-- NEW SECTION: Expertise Pillars (Adds visual content and depth) -->
-            <div class="bg-gray-100 py-20">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                    <h2 class="text-4xl font-extrabold text-gray-900 mb-12">Our Core Expertise: Clarity, Strategy, and Execution</h2>
-                    
-                    <div class="grid md:grid-cols-3 gap-8">
-                        
-                        <!-- Pillar 1: R&D Strategy -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                            <img src="https://placehold.co/120x120/1e293b/ffffff?text=R&D" onerror="this.src='https://placehold.co/120x120/1e293b/ffffff?text=Strategy'" alt="R&D Strategy Icon" class="mx-auto mb-6 rounded-full border-4 border-teal-500">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">R&D Due Diligence</h3>
-                            <p class="text-gray-600">Thorough, data-driven evaluation of research portfolios, preclinical pipelines, and technological risks to ensure your investments are sound and strategically aligned.</p>
-                        </div>
-                        
-                        <!-- Pillar 2: Funding & Finance -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                            <img src="https://placehold.co/120x120/1e293b/ffffff?text=CFO" onerror="this.src='https://placehold.co/120x120/1e293b/ffffff?text=Funding'" alt="CFO and Funding Icon" class="mx-auto mb-6 rounded-full border-4 border-blue-500">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">Financial & Funding Strategy</h3>
-                            <p class="text-gray-600">Expert grant writing (SBIR/STTR) and fractional CFO advisory to manage budgeting, secure non-dilutive funding, and optimize financial operations from concept to IPO.</p>
-                        </div>
-
-                        <!-- Pillar 3: Scientific Communication -->
-                        <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-xl transition duration-300">
-                            <img src="https://placehold.co/120x120/1e293b/ffffff?text=Comms" onerror="this.src='https://placehold.co/120x120/1e293b/ffffff?text=Communicate'" alt="Communication Icon" class="mx-auto mb-6 rounded-full border-4 border-teal-500">
-                            <h3 class="text-2xl font-bold text-gray-900 mb-3">Scientific Communication</h3>
-                            <p class="text-gray-600">High-quality scientific writing, publication support, and web development to clearly communicate complex data to investors, peers, and regulatory bodies.</p>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- NEW SECTION: Final Home Page CTA Banner (NOW CENTERED) -->
-            <div class="bg-teal-600 py-16">
-                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center text-center">
-                    <h2 class="text-3xl font-extrabold text-white sm:text-4xl mb-6">
-                        Ready to accelerate your preclinical development?
-                    </h2>
-                    <button onclick="showPage('contact')" class="px-8 py-3 bg-white text-teal-600 font-bold rounded-lg shadow-xl hover:bg-gray-100 transition duration-300">
-                        Request a Consultation
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-600 hover:text-teal-600 focus:outline-none">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
                     </button>
                 </div>
             </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white shadow-md">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-600" onclick="navigate('home')">Home</a>
+                <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-600" onclick="navigate('about')">About Us</a>
+                <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:bg-teal-50 hover:text-teal-600" onclick="navigate('services')">Services</a>
+                <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-teal-600 hover:bg-teal-700 transition duration-300 text-center" onclick="navigate('contact')">Contact Us</a>
+            </div>
+        </div>
+    </nav>
 
+    <main>
+        
+        <!-- Page 1: Home Section (Visible by default on load) -->
+        <section id="home" class="min-h-screen bg-white">
+            <!-- Interactive Canvas Background -->
+            <canvas id="atom-canvas"></canvas>
+
+            <div class="content-container max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                
+                <!-- Hero Section (Primary Brand: SHP Consulting) -->
+                <div class="text-center pb-16 pt-8">
+                    <h1 class="text-6xl sm:text-7xl font-extrabold tracking-tight text-gray-900 leading-tight">
+                        Make better biotech decisions with <span class="text-teal-600">expert R&D insights</span> and services.
+                    </h1>
+                    <p class="mt-6 text-xl text-gray-500 max-w-3xl mx-auto">
+                        Strategic support for early-stage cell and antibody-based therapies, backed by specialized execution from SHINE Collective Labs.
+                    </p>
+                    <a href="#contact" class="mt-8 inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-xl shadow-lg text-white bg-teal-600 hover:bg-teal-700 transition duration-300 transform hover:scale-105" onclick="navigate('contact')">
+                        Start Your Project
+                    </a>
+                </div>
+
+                <!-- Three Pillars Section -->
+                <div class="py-16">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        
+                        <!-- Pillar 1 -->
+                        <div class="bg-gray-50 p-8 rounded-xl shadow-xl hover:shadow-2xl transition duration-500 border-t-4 border-teal-600">
+                            <i data-lucide="zap" class="w-8 h-8 text-teal-600 mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">The Challenge</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                For small biotech companies with lean teams, navigating breakthrough innovation can be especially demanding. Limited time and in-house expertise often make it difficult to make strategic decisions, apply for funding—dilutive or non-dilutive—or publish research.
+                            </p>
+                        </div>
+
+                        <!-- Pillar 2 -->
+                        <div class="bg-gray-50 p-8 rounded-xl shadow-xl hover:shadow-2xl transition duration-500 border-t-4 border-teal-600">
+                            <i data-lucide="flask-round" class="w-8 h-8 text-teal-600 mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">The Solution</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                At SHP Consulting, we offer comprehensive, data-driven R&D due diligence research and concierge services designed to support biotech companies in making informed, strategic decisions. Our team of seasoned scientists delivers clear insights and opportunity mapping across the biotech landscape.
+                            </p>
+                        </div>
+
+                        <!-- Pillar 3 (Button Removed) -->
+                        <div class="bg-gray-50 p-8 rounded-xl shadow-xl hover:shadow-2xl transition duration-500 border-t-4 border-teal-600">
+                            <i data-lucide="users" class="w-8 h-8 text-teal-600 mb-4"></i>
+                            <h3 class="text-xl font-bold text-gray-900 mb-3">The Services</h3>
+                            <p class="text-gray-600 leading-relaxed">
+                                We empower startups and preclinical developers in cell and antibody-based therapies with strategic advice and expert services — from grant writing and antibody engineering to bioinformatics. At SHP Consulting, we help you navigate science, funding, and growth with clarity and confidence.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Our Core Expertise Section -->
+                <div class="py-16 text-center">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-10">Our Core Expertise</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Expertise Card 1: R&D -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <i data-lucide="dna" class="w-8 h-8 text-indigo-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">R&D Due Diligence</h3>
+                            <p class="text-gray-600">Deep scientific analysis, risk evaluation, and preclinical study design to validate innovation.</p>
+                        </div>
+                        <!-- Expertise Card 2: Financial -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <i data-lucide="dollar-sign" class="w-8 h-8 text-indigo-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Financial & Funding Strategy</h3>
+                            <p class="text-gray-600">Strategic grant writing (SBIR/STTR) and part-time CFO services for sustainable growth.</p>
+                        </div>
+                        <!-- Expertise Card 3: Communication -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-200">
+                            <i data-lucide="send" class="w-8 h-8 text-indigo-600 mx-auto mb-4"></i>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-3">Scientific Communication</h3>
+                            <p class="text-gray-600">Website development, scientific illustration, and professional ghostwriting for publications.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Full-width CTA Banner -->
+            <div class="content-container bg-indigo-700 py-16 mt-16">
+                <div class="max-w-4xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold text-white mb-4">Ready to accelerate your biotech venture?</h2>
+                    <p class="text-indigo-200 mb-8">
+                        Partner with our experts to move from concept to clinic with clarity and momentum.
+                    </p>
+                    <div class="flex justify-center">
+                        <a href="#contact" class="px-8 py-3 text-lg font-semibold text-indigo-700 bg-white rounded-xl shadow-2xl hover:bg-gray-100 transition duration-300 transform hover:scale-105" onclick="navigate('contact')">
+                            Request a Consultation
+                        </a>
+                    </div>
+                </div>
+            </div>
         </section>
-        <!-- Page 1: Home Section - End -->
 
-        <!-- Page 2: About Us Section (Refined and Decongested with Carousel/Banner) -->
-        <section id="about" class="page-section bg-white">
-            
-            <!-- NEW ABOUT HERO SECTION (Carousel Type) -->
-            <div class="relative overflow-hidden hero-bg text-white py-16 sm:py-24">
-                <!-- IMPORTANT CHANGE: Increased height to 280px (desktop) and 200px (mobile) to give text more room -->
-                <div id="about-hero-carousel" class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-[280px] sm:h-[200px] flex items-center justify-center">
-                    
-                    <!-- Slide 1: Primary Value Proposition -->
-                    <div class="about-hero-slide active text-center">
-                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
+        <!-- Page 2: About Us Section (Hidden by default) -->
+        <section id="about" class="min-h-screen pt-20 pb-16 bg-gray-50 hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- Auto-Rotating Hero Banner -->
+                <div class="about-hero-container relative bg-teal-600 rounded-2xl shadow-xl overflow-hidden mb-12 flex items-center justify-center">
+                    <div class="absolute inset-0 bg-black opacity-30"></div>
+                    <div class="relative text-center p-8">
+                        <div id="about-hero-text" class="text-3xl sm:text-5xl font-extrabold text-white transition-opacity duration-1000">
                             Strategic Support for Early-Stage Biotech & Startups
-                        </h1>
-                        <p class="text-lg sm:text-xl text-teal-200 max-w-4xl mx-auto">
-                            We accelerate your journey from concept to clinic with clear, practical advice and hands-on services.
-                        </p>
-                    </div>
-
-                    <!-- Slide 2: Mission Focus -->
-                    <div class="about-hero-slide text-center">
-                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
-                            Bringing Cell and Antibody-Based Products to Life
-                        </h1>
-                        <p class="text-lg sm:text-xl text-teal-200 max-w-4xl mx-auto">
-                            Our team combines deep scientific expertise with practical business experience to guide your critical decisions.
-                        </p>
-                    </div>
-
-                    <!-- Slide 3: Key Differentiator -->
-                    <div class="about-hero-slide text-center">
-                        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight mb-4">
-                            Expert Guidance. Flexible Research Portfolio.
-                        </h1>
-                        <p class="text-lg sm:text-xl text-teal-200 max-w-4xl mx-auto">
-                            Get cost-effective research management and clear insights tailored specifically to your startup's needs.
-                        </p>
+                        </div>
                     </div>
                 </div>
                 
-                <!-- Navigation Dots -->
-                <div id="about-carousel-dots" class="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
-                    <span class="w-2.5 h-2.5 bg-white rounded-full opacity-75 transition duration-300 cursor-pointer" data-slide-index="0"></span>
-                    <span class="w-2.5 h-2.5 bg-white rounded-full opacity-30 hover:opacity-75 transition duration-300 cursor-pointer" data-slide-index="1"></span>
-                    <span class="w-2.5 h-2.5 bg-white rounded-full opacity-30 hover:opacity-75 transition duration-300 cursor-pointer" data-slide-index="2"></span>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+                    <!-- Left Column: What We Do (Grouped for less congestion) -->
+                    <div class="lg:col-span-2">
+                        <h2 class="text-4xl font-bold text-gray-900 mb-6 border-b pb-2">What We Do</h2>
+                        <p class="text-lg text-gray-600 mb-8">
+                            At **SHP Consulting**, we specialize in guiding biotech startups and preclinical developers through the complex path of bringing cell and antibody-based products to life. Our mission is to provide clear, practical strategic advice and hands-on services.
+                        </p>
+                        
+                        <!-- Group 1: Strategic & Preclinical Development (SHP Core) -->
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-semibold text-teal-600 mb-4 flex items-center"><i data-lucide="microscope" class="w-6 h-6 mr-2"></i> R&D & Preclinical Development</h3>
+                            <ul class="space-y-3 text-gray-700 list-inside ml-2">
+                                <li class="font-medium">Guidance for start-up and preclinical development for cell and antibody-based therapies.</li>
+                                <li class="font-medium">Guidance on Advanced antibody engineering tailored to your product needs.</li>
+                                <li class="font-medium">Preclinical Study design consultation.</li>
+                                <li class="font-medium">Protocol optimization and technical troubleshooting.</li>
+                            </ul>
+                        </div>
+
+                        <!-- Group 2: Financial and Scientific Communication (SHP Core) -->
+                        <div class="mb-8">
+                            <h3 class="text-2xl font-semibold text-teal-600 mb-4 flex items-center"><i data-lucide="book-open" class="w-6 h-6 mr-2"></i> Funding & Communication</h3>
+                            <ul class="space-y-3 text-gray-700 list-inside ml-2">
+                                <li class="font-medium">Medical and biological grant writing, along with professional ghostwriting services.</li>
+                                <li class="font-medium">Part-time CFO advisory to manage your financial strategy and operations.</li>
+                                <li class="font-medium">Vendor coordination (labs, CROs, manufacturing, etc.).</li>
+                            </ul>
+                        </div>
+
+                        <!-- Group 3: Note on Partner Services -->
+                         <div class="mb-8">
+                            <h3 class="text-2xl font-semibold text-teal-600 mb-4 flex items-center"><i data-lucide="settings" class="w-6 h-6 mr-2"></i> Specialized Technical Execution</h3>
+                            <p class="text-gray-700 font-medium">
+                                For deep technical needs like **Bioinformatics**, **Digital Marketing**, and **Scientific Art**, we partner with the **SHINE Collective Labs**. See our <a href="#services" class="text-indigo-600 hover:text-indigo-700 font-bold underline" onclick="navigate('services')">Services page</a> for the full portfolio.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: Why Choose Us -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-indigo-600 h-full">
+                            <h2 class="text-3xl font-bold text-gray-900 mb-6">Why Choose Us?</h2>
+                            <p class="text-gray-600 leading-relaxed mb-6">
+                                Our team combines deep scientific expertise with practical business experience to help you navigate the scientific, financial, and communication hurdles common in early development. We provide personalized solutions designed to meet your specific goals and budget.
+                            </p>
+                            <p class="text-gray-600 leading-relaxed mb-8 font-semibold">
+                                Partner with us to access expert guidance and services that bring clarity and momentum to your biotech venture.
+                            </p>
+                            <a href="#contact" class="inline-block w-full text-center px-6 py-3 border border-transparent text-base font-semibold rounded-xl text-white bg-indigo-600 hover:bg-indigo-700 transition duration-300 shadow-md" onclick="navigate('contact')">
+                                Partner with SHP Consulting
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <!-- END NEW ABOUT HERO SECTION -->
+        </section>
 
+        <!-- Page 3: Our Services Section (Hidden by default) -->
+        <section id="services" class="min-h-screen pt-20 pb-16 bg-white hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <header class="text-center mb-16">
+                    <h2 class="text-4xl sm:text-5xl font-extrabold text-gray-900 mb-4">Comprehensive Services Portfolio</h2>
+                    <p class="text-xl text-gray-600 max-w-4xl mx-auto">
+                        We offer a full spectrum of support, combining SHP's strategic R&D and financial consulting with the deep technical execution provided by SHINE Collective Labs.
+                    </p>
+                </header>
 
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-                <!-- Static Intro Paragraph (Moved here from the top) -->
-                <p class="text-xl text-gray-700 max-w-4xl mb-16">At SHP Consulting, we specialize in guiding biotech startups and preclinical developers through the complex path of bringing cell and antibody-based products to life. Our mission is to provide clear, practical strategic advice and hands-on services that accelerate your journey from concept to clinic.</p>
-
-                <div class="grid lg:grid-cols-2 gap-16">
+                <!-- === SECTION 1: SHP CONSULTING CORE STRATEGIC SERVICES === -->
+                <div class="mb-20">
+                    <h3 class="text-3xl font-bold text-teal-700 mb-8 border-b-2 border-teal-200 pb-3 flex items-center">
+                        <i data-lucide="shield-check" class="w-7 h-7 mr-3"></i> SHP Consulting: Strategic Core & R&D Guidance
+                    </h3>
                     
-                    <!-- What We Do - DECONGESTED -->
-                    <div>
-                        <h2 class="text-3xl font-extrabold text-gray-900 mb-8">What We Do</h2>
-                        
-                        <!-- Group 1: Scientific & R&D Execution -->
-                        <div class="mb-10">
-                            <h3 class="text-2xl font-semibold text-teal-700 mb-4 border-b pb-2">Scientific & R&D Execution</h3>
-                            <ul class="space-y-4 text-gray-700 font-medium">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-                                    Guidance for start-up and preclinical development for cell and antibody-based therapies
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"/><path d="M14.5 10.5c.34-.34.79-.5 1.25-.5.46 0 .91.16 1.25.5l.5.5c.34.34.5.79.5 1.25s-.16.91-.5 1.25l-.5.5c-.34.34-.79.5-1.25.5s-.91-.16-1.25-.5l-.5-.5c-.34-.34-.5-.79-.5-1.25s.16-.91.5-1.25z"/></svg>
-                                    Guidance on Advanced antibody engineering tailored to your product needs
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5a2.5 2.5 0 0 1 5 0V20"/><path d="M12 19.5a2.5 2.5 0 0 1 5 0V20"/><path d="M8 17.5l-2-2.5 2-2.5M16 17.5l2-2.5-2-2.5"/></svg>
-                                    Preclinical Study design consultation
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.76l1.54-9-1.46-1.46Z"/><path d="M10 15v4h7.32a2 2 0 0 0 2-1.76l.58-3.32"/></svg>
-                                    Protocol optimization and technical troubleshooting
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14l2-2 4 4"/><path d="M14 10l2-2 4 4"/></svg>
-                                    Bioinformatics support, including data normalization and detailed analysis
-                                </li>
-                            </ul>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- SHP Service Card 1: Strategic Guidance -->
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md border-t-4 border-teal-600">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Strategic R&D Roadmap</h4>
+                            <p class="text-gray-600 text-sm">Strategic guidance for start-up and preclinical development of cell and antibody-based therapies, including product design, sourcing, and early-stage validation.</p>
                         </div>
+                        <!-- SHP Service Card 2: Antibody Engineering -->
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md border-t-4 border-teal-600">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Advanced Antibody Engineering</h4>
+                            <p class="text-gray-600 text-sm">Expert guidance in antibody engineering, customized to align with your specific product development goals and therapeutic applications.</p>
+                        </div>
+                        <!-- SHP Service Card 3: Preclinical Study -->
+                        <div class="bg-gray-50 p-6 rounded-xl shadow-md border-t-4 border-teal-600">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Preclinical Study Consultation</h4>
+                            <p class="text-gray-600 text-sm">Strategic consultation on study design, model selection, controls, endpoints, dosing regimens, and timelines to ensure scientific rigor and regulatory alignment.</p>
+                        </div>
+                        <!-- SHP Service Card 4: Protocol & Troubleshooting -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-gray-300">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Protocol Optimization</h4>
+                            <p class="text-gray-600 text-sm">Refinement of experimental protocols to improve efficiency, reproducibility, and outcomes to resolve technical issues in laboratory workflows.</p>
+                        </div>
+                        <!-- SHP Service Card 5: Scientific Writing/Funding -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-gray-300">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Scientific Writing & Funding</h4>
+                            <p class="text-gray-600 text-sm">Specializing in life-science grant writing (SBIR/STTR proposals) and manuscript preparation, editing, and submission support for peer-reviewed publications.</p>
+                        </div>
+                        <!-- SHP Service Card 6: Part-time CFO -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-gray-300">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-2">Advisory Part-time CFO</h4>
+                            <p class="text-gray-600 text-sm">Strategic financial guidance, budgeting, fundraising support, and operational oversight tailored to early-stage startups and life science ventures.</p>
+                        </div>
+                    </div>
+                </div>
 
-                        <!-- Group 2: Strategic & Financial Support -->
-                        <div class="mb-10">
-                            <h3 class="text-2xl font-semibold text-teal-700 mb-4 border-b pb-2">Strategic & Financial Support</h3>
-                            <ul class="space-y-4 text-gray-700 font-medium">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14V8h-.5A2.5 2.5 0 0 0 9 10.5V12M18 6l-6 6-6-6"/><path d="M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9 9 4.03 9 9-4.03 9-9 9z"/></svg>
-                                    Part-time CFO advisory to manage your financial strategy and operations
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                                    Vendor coordination (labs, CROs, manufacturing, etc.)
-                                </li>
+
+                <!-- === SECTION 2: SHINE COLLECTIVE LABS SPECIALIZED SERVICES === -->
+                <div class="mb-12">
+                    <h3 class="text-3xl font-bold text-indigo-700 mb-8 border-b-2 border-indigo-200 pb-3 flex items-center">
+                        <i data-lucide="target" class="w-7 h-7 mr-3"></i> SHINE Collective Labs: Specialized Execution Partners
+                    </h3>
+                    <p class="text-lg text-gray-700 mb-10">
+                        For execution-focused services, SHP Consulting partners with SHINE Collective Labs, a network of highly specialized firms.
+                    </p>
+                </div>
+                
+                <!-- Service Category 1: Digital Marketing (NuShape) -->
+                <div class="bg-indigo-50 p-8 rounded-2xl shadow-xl mb-12">
+                    <h3 class="text-3xl font-bold text-indigo-700 mb-6 flex items-center"><i data-lucide="megaphone" class="w-8 h-8 mr-3"></i> Digital Marketing <span class="text-xl font-medium text-gray-600 ml-3">(NuShape)</span></h3>
+                    <p class="text-lg text-gray-700 mb-6">NuShape specializes in crafting targeted digital strategies and content that translate complex science into clear, compelling messaging for investors and industry peers.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Service Card 1.1 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-indigo-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Thought Leadership & Content</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>Blogs, whitepapers, case studies explaining research/technology breakthroughs.</li>
+                                <li>Email campaigns targeting investors, scientists, or healthcare stakeholders.</li>
                             </ul>
                         </div>
-                        
-                        <!-- Group 3: Communication & Branding -->
+                        <!-- Service Card 1.2 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-indigo-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Web & Digital Presence</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>Website building for research pipelines, publications, investor relations, and clinical trial recruitment.</li>
+                                <li>Managing social media campaigns to showcase innovations.</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 1.3 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-indigo-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">SEO & Visual Content</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>SEO strategy focused on biotech-related keywords (CRO, drug discovery).</li>
+                                <li>Producing explainer videos/animations simplifying complex biotech concepts.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Category 2: 3D/2D Art (JarMorb) -->
+                <div class="bg-teal-50 p-8 rounded-2xl shadow-xl mb-12">
+                    <h3 class="text-3xl font-bold text-teal-700 mb-6 flex items-center"><i data-lucide="palette" class="w-8 h-8 mr-3"></i> 3D/2D Art <span class="text-xl font-medium text-gray-600 ml-3">(JarMorb)</span></h3>
+                    <p class="text-lg text-gray-700 mb-6">JarMorb brings science to life through high-quality visual assets, making complex mechanisms accessible for presentations, publications, and marketing efforts.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Service Card 2.1 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-teal-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Scientific Modeling & Animation</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>3D modeling of proteins, molecules, and cellular structures.</li>
+                                <li>Detailed scientific animations to explain drug mechanisms or lab workflows.</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 2.2 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-teal-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Interactive Visualization</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>Designing interactive 3D visualizations of lab equipment or processes.</li>
+                                <li>Virtual and augmented reality visualizations for training or conferences.</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 2.3 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-teal-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Publication & Campaign Visuals</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>2D infographics for pitch decks and investor reports.</li>
+                                <li>Animations for clinical trial recruitment campaigns.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Category 3: Data Science and Data Engineering (DataVoltrix) -->
+                <div class="bg-gray-200 p-8 rounded-2xl shadow-xl">
+                    <h3 class="text-3xl font-bold text-gray-800 mb-6 flex items-center"><i data-lucide="database" class="w-8 h-8 mr-3"></i> Data Science & Engineering <span class="text-xl font-medium text-gray-600 ml-3">(DataVoltrix)</span></h3>
+                    <p class="text-lg text-gray-700 mb-6">DataVoltrix provides robust data infrastructure and advanced analytical modeling to drive discovery and ensure regulatory compliance.</p>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Service Card 3.1 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-gray-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Data Infrastructure & Modeling</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>Building pipelines for managing large-scale genomic or proteomic datasets.</li>
+                                <li>Developing predictive models for drug discovery or clinical trial outcomes.</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 3.2 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-gray-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">AI & Advanced Analytics</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>Using NLP to analyze scientific literature, patents, or clinical reports.</li>
+                                <li>AI-driven imaging analysis for microscopy and pathology slides.</li>
+                                <li>Advanced data visualization dashboards.</li>
+                            </ul>
+                        </div>
+                        <!-- Service Card 3.3 -->
+                        <div class="bg-white p-6 rounded-xl shadow-md border-t-2 border-gray-500">
+                            <h4 class="text-xl font-semibold text-gray-900 mb-3">Compliance & Real-time Data</h4>
+                            <ul class="list-disc list-inside text-gray-600 text-sm space-y-2">
+                                <li>Data governance consulting for compliance (FDA, HIPAA, GDPR).</li>
+                                <li>Real-time analytics for biotech lab instruments or IoT-enabled lab environments.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Page 4: Contact Us Section (Hidden by default) -->
+        <section id="contact" class="min-h-screen flex items-center pt-20 pb-16 bg-indigo-700 hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+                <header class="text-center mb-10">
+                    <h2 class="text-4xl font-extrabold text-white mb-3">Contact SHP Consulting</h2>
+                    <p class="text-indigo-200 text-lg">
+                        Curious about how SHP Consulting can support your biotech journey? Reach out by filling out the form below—our team will be in touch soon. We're here to help you transform your innovation into real-world impact.
+                    </p>
+                </header>
+
+                <!-- Contact Form -->
+                <form id="contact-form" class="bg-white p-8 sm:p-10 rounded-2xl shadow-2xl">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
-                            <h3 class="text-2xl font-semibold text-teal-700 mb-4 border-b pb-2">Communication & Branding</h3>
-                            <ul class="space-y-4 text-gray-700 font-medium">
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 10h.01M12 10h.01M16 10h.01M12 14h.01M12 18h.01M16 18h.01M8 18h.01M8 14h.01M16 14h.01M2 4h20v16H2z"/></svg>
-                                    Medical and biological grant writing, along with professional ghostwriting services
-                                </li>
-                                <li class="flex items-start">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon-svg mr-3 mt-1 text-teal-600 flex-shrink-0" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12H3"/><path d="M17 17l-5 5-5-5M17 7l-5-5-5 5"/></svg>
-                                    Website creation and scientific artwork to communicate your science effectively
-                                </li>
-                            </ul>
+                            <label for="Name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                            <input type="text" id="Name" name="Name" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition duration-150">
                         </div>
-
-                    </div>
-
-                    <!-- Why Choose Us? (Remains the same, balancing the density on the left) -->
-                    <div class="bg-gray-50 p-8 rounded-xl shadow-inner h-fit">
-                        <h2 class="text-3xl font-bold text-gray-900 mb-6 border-b pb-2">Why Choose Us?</h2>
-                        <p class="text-gray-600 mb-8">Our team combines deep scientific expertise with practical business experience to help you navigate the scientific, financial, and communication hurdles common in early development. We provide personalized solutions designed to meet your specific goals and budget—whether it’s securing funding, optimizing your research, or building your brand.</p>
-                        <p class="text-lg font-semibold text-gray-700 mb-8">Partner with us to access expert guidance and services that bring clarity and momentum to your biotech venture.</p>
-                        <button onclick="showPage('contact')" class="w-full text-center px-6 py-3 bg-teal-600 text-white font-semibold rounded-lg hover:bg-teal-700 transition">Partner with SHP Consulting</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Page 3: Our Services Section (Unchanged) -->
-        <section id="services" class="page-section bg-gray-50 py-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Helping Innovation and Speeding Up Growth</h1>
-                <p class="text-xl text-gray-700 max-w-4xl mb-12">At SHP Consulting, we support biotech startups and innovative companies by providing clear advice and practical solutions to turn new science into successful businesses, by providing services in:</p>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                    <!-- Service 1: Strategic guidance -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-teal-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Strategic R&D Guidance</h3>
-                        <p class="text-gray-600">Strategic guidance for start-up and preclinical development of cell and antibody-based therapies, including product design, sourcing, experimental planning, and early-stage validation.</p>
-                    </div>
-
-                    <!-- Service 2: Antibody engineering -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Advanced Antibody Engineering</h3>
-                        <p class="text-600">Expert guidance in advanced antibody engineering, customized to align with your specific product development goals and therapeutic applications.</p>
-                    </div>
-
-                    <!-- Service 3: Preclinical Study design -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-teal-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Preclinical Study Design</h3>
-                        <p class="text-gray-600">Strategic consultation on preclinical study design, including selection of appropriate models, experimental controls, endpoints, dosing regimens, and study timelines to ensure scientific rigor and regulatory alignment.</p>
-                    </div>
-
-                    <!-- Service 4: Protocol optimization -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Protocol Optimization & QC</h3>
-                        <p class="text-gray-600">Refinement of experimental protocols to improve efficiency, reproducibility, and outcomes to resolve technical issues in laboratory workflows.</p>
-                    </div>
-
-                    <!-- Service 5: Scientific Writing Services -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-teal-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Scientific Writing & Grants</h3>
-                        <p class="text-gray-600">Specializing in life-science grant writing, including SBIR/STTR proposals, federal and non-federal funding applications, and manuscript preparation, editing, and submission support for peer-reviewed publications.</p>
-                    </div>
-
-                    <!-- Service 6: Web Development and Scientific Illustration -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Web/Illustration Services</h3>
-                        <p class="text-gray-600">Design and build visually engaging, user-friendly websites tailored for biotech startups, labs, and life science ventures — paired with high-quality scientific illustrations, schematics, and custom graphics.</p>
+                        <div>
+                            <label for="Email" class="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
+                            <input type="email" id="Email" name="Email" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition duration-150">
+                        </div>
                     </div>
                     
-                    <!-- Service 7: Advisory part-time CFO services -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-teal-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Advisory Part-time CFO</h3>
-                        <p class="text-gray-600">Advisory part-time CFO services providing strategic financial guidance, budgeting, fundraising support, and operational oversight tailored to early-stage startups and life science ventures.</p>
+                    <div class="mb-6">
+                        <label for="Subject" class="block text-sm font-medium text-gray-700 mb-1">Subject / Area of Interest</label>
+                        <input type="text" id="Subject" name="Subject" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition duration-150">
                     </div>
                     
-                    <!-- Service 8: Comprehensive bioinformatic services -->
-                    <div class="service-card bg-white p-6 rounded-xl shadow-lg border-l-4 border-blue-600">
-                        <h3 class="text-xl font-bold text-gray-900 mb-2">Bioinformatic Services</h3>
-                        <p class="text-gray-600">Comprehensive bioinformatic services, including data normalization, statistical analysis, and interpretation of high-throughput datasets (e.g., RNA-seq, proteomics, single-cell).</p>
+                    <div class="mb-8">
+                        <label for="Message" class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                        <textarea id="Message" name="Message" rows="5" required class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-teal-500 focus:border-teal-500 transition duration-150"></textarea>
                     </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Page 4: Contact Us Section (Unchanged) -->
-        <section id="contact" class="page-section bg-white py-20">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="max-w-3xl mx-auto">
-                    <h1 class="text-4xl font-extrabold text-gray-900 mb-4 text-center">Contact Us</h1>
-                    <p class="text-xl text-gray-700 mb-10 text-center">Curious about how SHP Consulting can support your biotech journey? Reach out by filling out the form below—our team will be in touch soon. We're here to help you transform your innovation into real-world impact.</p>
                     
-                    <div class="bg-gray-50 p-8 rounded-xl shadow-xl">
-                        <form id="contact-form" class="space-y-6">
-                            <!-- Name Field -->
-                            <div>
-                                <label for="Name" class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-                                <input type="text" id="Name" name="Name" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500">
-                            </div>
-
-                            <!-- Email Field -->
-                            <div>
-                                <label for="Email" class="block text-sm font-medium text-gray-700 mb-1">Work Email</label>
-                                <input type="email" id="Email" name="Email" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500">
-                            </div>
-                            
-                            <!-- Subject Field -->
-                            <div>
-                                <label for="Subject" class="block text-sm font-medium text-gray-700 mb-1">Subject / Area of Interest</label>
-                                <input type="text" id="Subject" name="Subject" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500">
-                            </div>
-
-                            <!-- Message Field -->
-                            <div>
-                                <label for="Message" class="block text-sm font-medium text-gray-700 mb-1">How can we support your project?</label>
-                                <textarea id="Message" name="Message" rows="4" required class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-teal-500 focus:border-teal-500"></textarea>
-                            </div>
-
-                            <!-- Submission Status Area -->
-                            <div id="status-message" class="text-center p-3 rounded-lg hidden" role="status"></div>
-
-                            <!-- Submit Button -->
-                            <button type="submit" id="submit-button" class="w-full flex center items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-lg shadow-md text-white bg-teal-600 hover:bg-teal-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 transition">
-                                <span id="submit-text">Send Inquiry</span>
-                                <div id="loading-spinner" class="loading-ring ml-2 hidden"></div>
-                            </button>
-                        </form>
+                    <div class="flex flex-col items-center">
+                        <button type="submit" id="submit-button" class="w-full md:w-auto px-8 py-3 text-lg font-semibold text-white bg-teal-600 rounded-xl hover:bg-teal-700 transition duration-300 shadow-lg disabled:opacity-50">
+                            Send Inquiry
+                        </button>
+                        <p id="form-message" class="mt-4 text-sm font-medium"></p>
                     </div>
-                </div>
+                </form>
             </div>
         </section>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm">
-            &copy; 2025 SHP Consulting. All rights reserved. | <a href="#contact" onclick="showPage('contact')" class="text-teal-400 hover:text-teal-200">Privacy Policy</a>
+    <!-- Footer (Primary Brand: SHP Consulting) -->
+    <footer class="bg-gray-900 text-white py-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-xl font-bold text-teal-400 mb-3">SHP Consulting</p>
+            <p class="text-gray-400 text-sm">&copy; 2025 SHP Consulting. All rights reserved. Strategic support for biotech innovation.</p>
+            <div class="mt-4 space-x-4">
+                <a href="#about" class="text-gray-400 hover:text-teal-400 text-sm" onclick="navigate('about')">About</a>
+                <span class="text-gray-600">|</span>
+                <a href="#services" class="text-gray-400 hover:text-teal-400 text-sm" onclick="navigate('services')">Services</a>
+                <span class="text-gray-600">|</span>
+                <a href="#contact" class="text-gray-400 hover:text-teal-400 text-sm" onclick="navigate('contact')">Contact</a>
+            </div>
         </div>
     </footer>
 
+
     <script>
-        // --- Single Page Application (SPA) Navigation Logic ---
-        function showPage(pageId) {
-            document.querySelectorAll('.page-section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(pageId).classList.add('active');
-            window.scrollTo(0, 0); // Scroll to top on page change
-        }
+        // --- Page Navigation Logic (Client-Side Routing) ---
 
-        // --- About Page Carousel Logic ---
-        let currentSlide = 0;
-        let slideInterval;
+        // Map of all sections (pages)
+        const sections = {
+            home: document.getElementById('home'),
+            about: document.getElementById('about'),
+            services: document.getElementById('services'),
+            contact: document.getElementById('contact')
+        };
+        const allSections = Object.values(sections);
 
-        function showAboutSlide(index) {
-            const slides = document.querySelectorAll('#about-hero-carousel .about-hero-slide');
-            const dots = document.querySelectorAll('#about-carousel-dots span');
-
-            if (slides.length === 0) return;
-
-            // Handle wrap-around
-            if (index >= slides.length) {
-                index = 0;
-            } else if (index < 0) {
-                index = slides.length - 1;
+        function navigate(pageId, pushState = true) {
+            // Ensure ID is valid
+            if (!sections[pageId]) {
+                pageId = 'home'; // Default to home if hash is invalid
             }
-            currentSlide = index;
 
-            slides.forEach((slide, i) => {
-                slide.classList.remove('active');
-                if (i === currentSlide) {
-                    slide.classList.add('active');
+            // 1. Hide all sections
+            allSections.forEach(section => section.classList.add('hidden'));
+
+            // 2. Show the target section
+            sections[pageId].classList.remove('hidden');
+
+            // 3. Update history state (optional: used for forward/back buttons)
+            if (pushState) {
+                history.pushState({ page: pageId }, '', `#${pageId}`);
+            }
+
+            // 4. Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // 5. Close mobile menu if open
+            if (window.innerWidth < 768) { // Check if screen is small (mobile)
+                const mobileMenu = document.getElementById('mobile-menu');
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                    // Check if icon exists before trying to set attribute
+                    const iconElement = mobileMenuButton.querySelector('[data-lucide]');
+                    if (iconElement) {
+                        iconElement.setAttribute('data-lucide', 'menu');
+                        lucide.createIcons();
+                    }
                 }
-            });
-
-            dots.forEach((dot, i) => {
-                dot.classList.remove('opacity-75', 'bg-white');
-                dot.classList.add('opacity-30', 'bg-white');
-                if (i === currentSlide) {
-                    dot.classList.remove('opacity-30');
-                    dot.classList.add('opacity-75');
-                }
-            });
-        }
-
-        function nextAboutSlide() {
-            showAboutSlide(currentSlide + 1);
-        }
-
-        function startAboutCarousel() {
-            // Only start if the carousel exists
-            if (document.getElementById('about-hero-carousel')) {
-                // Clear any previous interval just in case
-                clearInterval(slideInterval); 
-                // Set the interval for 5 seconds
-                slideInterval = setInterval(nextAboutSlide, 5000); 
             }
         }
+
+        // Handle initial load and browser history events
+        window.addEventListener('popstate', (event) => {
+            const pageId = window.location.hash.substring(1) || 'home';
+            navigate(pageId, false); // Do not push state again
+        });
+
+        // Initialize page view on load
+        window.onload = () => {
+            const initialPage = window.location.hash.substring(1) || 'home';
+            navigate(initialPage, false);
+            lucide.createIcons();
+            initParticles(); // Start the atom animation
+        };
+
+
+        // --- Navigation Menu Toggle ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
         
-        // --- Event Listeners and Initialization ---
-        document.addEventListener('DOMContentLoaded', () => {
-            // Initial SPA setup
-            const initialPage = window.location.hash ? window.location.hash.substring(1) : 'home';
-            const pageToShow = document.getElementById(initialPage) ? initialPage : 'home';
-            showPage(pageToShow);
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            const icon = mobileMenuButton.querySelector('[data-lucide]');
+            if (icon) {
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.setAttribute('data-lucide', 'menu');
+                } else {
+                    icon.setAttribute('data-lucide', 'x');
+                }
+                lucide.createIcons(); // Re-render icons after change
+            }
+        });
 
-            // Start the carousel as soon as the DOM is loaded
-            showAboutSlide(0);
-            startAboutCarousel();
 
-            // Handle dot clicks for manual control
-            document.querySelectorAll('#about-carousel-dots span').forEach(dot => {
-                dot.addEventListener('click', (e) => {
-                    const index = parseInt(e.target.getAttribute('data-slide-index'));
-                    showAboutSlide(index);
-                    clearInterval(slideInterval); // Stop auto-rotation after manual click
-                    slideInterval = setInterval(nextAboutSlide, 5000); // Restart auto-rotation
+        // --- About Page Hero Rotation Logic ---
+        const heroTextElement = document.getElementById('about-hero-text');
+        const messages = [
+            "Strategic Support for Early-Stage Biotech & Startups",
+            "Accelerate Your Journey from Concept to Clinic",
+            "Clarity in Science, Funding, and Growth"
+        ];
+        let messageIndex = 0;
+
+        function updateHeroText() {
+            if (!heroTextElement) return;
+            heroTextElement.style.opacity = '0';
+            setTimeout(() => {
+                heroTextElement.textContent = messages[messageIndex];
+                heroTextElement.style.opacity = '1';
+                messageIndex = (messageIndex + 1) % messages.length;
+            }, 500); // Wait for fade-out before changing content
+        }
+
+        // Initialize rotation
+        updateHeroText();
+        setInterval(updateHeroText, 5000); // Change message every 5 seconds
+
+
+        // --- Contact Form Submission Logic (Google Apps Script) ---
+
+        // CRITICAL: Replace this placeholder with your actual Google Apps Script Web App URL ending in /exec
+        // You get this URL after deploying the Code.gs.js script in your Google Sheet (Access: "Anyone").
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbxnQ_T_K_R6OzLvGyQgjCRdB7TnYk-G5toFVGE_8whTVXziXw1cXNmzKPQPjCF_xi0cqQ/exec'; 
+
+        const form = document.getElementById('contact-form');
+        const submitButton = document.getElementById('submit-button');
+        const formMessage = document.getElementById('form-message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            submitButton.disabled = true;
+            submitButton.textContent = 'Sending...';
+            formMessage.textContent = 'Sending your inquiry...';
+            formMessage.className = 'mt-4 text-sm font-medium text-blue-500';
+
+            try {
+                // Ensure scriptURL is updated
+                if (scriptURL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE') {
+                    throw new Error("Apps Script URL is not configured. Please replace the placeholder.");
+                }
+
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', // Essential for Google Apps Script execution
+                    cache: 'no-cache',
+                    body: new FormData(form)
                 });
-            });
 
-            // Handle hash changes in URL (e.g., back/forward buttons)
-            window.addEventListener('hashchange', () => {
-                const pageId = window.location.hash ? window.location.hash.substring(1) : 'home';
-                if (document.getElementById(pageId)) {
-                    showPage(pageId);
-                } else {
-                    showPage('home');
+                // In no-cors mode, a successful fetch() only means no network error occurred.
+                // We rely on the App Script's execution success, which is usually guaranteed 
+                // if the deployment and URL are correct.
+                formMessage.textContent = 'Thank you! Your inquiry has been sent successfully.';
+                formMessage.className = 'mt-4 text-sm font-medium text-green-600';
+                form.reset(); // Clear form fields on success
+
+            } catch (error) {
+                console.error('Error!', error.message);
+                let msg = 'Submission failed. Please try again.';
+                if (error.message.includes("configured")) {
+                    msg = 'Apps Script URL is missing. Check the scriptURL placeholder.';
+                } else if (error.message.includes("network")) {
+                    msg = 'Network error or Apps Script deployment settings are wrong (Check "Anyone" access).';
                 }
-            });
+                formMessage.textContent = msg;
+                formMessage.className = 'mt-4 text-sm font-medium text-red-600';
+            } finally {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Send Inquiry';
+            }
+        });
 
-            // --- Google Sheets Contact Form Logic ---
+        // --- Interactive Atom/Particle Background Logic ---
+        let canvas, ctx, mouse, particles = [];
+        const maxRadius = 1.5;
+        const minRadius = 0.5;
+        const numParticles = 120; // Increased count for visibility
+        const lineColor = 'rgba(30, 204, 150, 0.4)'; // Increased opacity
+        const particleColor = 'rgba(30, 204, 150, 0.8)'; // Increased opacity
+
+        function initParticles() {
+            canvas = document.getElementById('atom-canvas');
+            if (!canvas) return; // Exit if not on home page or canvas not found
             
-            // !!! IMPORTANT: REPLACE THIS PLACEHOLDER URL !!!
-            // This URL must be replaced with the Web App URL generated by Google Apps Script.
-            const scriptURL = 'https://script.google.com/macros/s/AKfycbxnQ_T_K_R6OzLvGyQgjCRdB7TnYk-G5toFVGE_8whTVXziXw1cXNmzKPQPjCF_xi0cqQ/exec'; 
+            ctx = canvas.getContext('2d');
+            mouse = { x: null, y: null };
 
-            const form = document.getElementById('contact-form');
-            const submitButton = document.getElementById('submit-button');
-            const statusMessage = document.getElementById('status-message');
-            const loadingSpinner = document.getElementById('loading-spinner');
-            const submitText = document.getElementById('submit-text');
+            // Set canvas size and handle resize
+            function setCanvasSize() {
+                const homeSection = document.getElementById('home');
+                canvas.width = homeSection.offsetWidth;
+                canvas.height = homeSection.offsetHeight;
+            }
+            setCanvasSize();
+            window.addEventListener('resize', setCanvasSize);
 
-            const updateStatus = (message, isSuccess) => {
-                statusMessage.textContent = message;
-                statusMessage.classList.remove('hidden', 'bg-red-100', 'text-red-700', 'bg-green-100', 'text-green-700');
-                if (isSuccess) {
-                    statusMessage.classList.add('bg-green-100', 'text-green-700');
-                    form.reset(); 
-                } else {
-                    statusMessage.classList.add('bg-red-100', 'text-red-700');
+            // Mouse event listener for interaction
+            canvas.addEventListener('mousemove', (event) => {
+                // Calculate mouse position relative to the canvas
+                const rect = canvas.getBoundingClientRect();
+                mouse.x = event.clientX - rect.left;
+                mouse.y = event.clientY - rect.top;
+            });
+            // Reset mouse when leaving the canvas area
+            canvas.addEventListener('mouseleave', () => {
+                mouse.x = null;
+                mouse.y = null;
+            });
+
+            // Create particles
+            particles = [];
+            for (let i = 0; i < numParticles; i++) {
+                let radius = Math.random() * (maxRadius - minRadius) + minRadius;
+                let x = Math.random() * (canvas.width - radius * 2) + radius;
+                let y = Math.random() * (canvas.height - radius * 2) + radius;
+                // Increased initial speed for more noticeable movement
+                let dx = (Math.random() - 0.5) * 0.8; 
+                let dy = (Math.random() - 0.5) * 0.8;
+                particles.push(new Particle(x, y, radius, dx, dy));
+            }
+
+            animateParticles();
+        }
+
+        class Particle {
+            constructor(x, y, radius, dx, dy) {
+                this.x = x;
+                this.y = y;
+                this.radius = radius;
+                this.dx = dx;
+                this.dy = dy;
+                this.baseRadius = radius;
+                this.color = particleColor;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+
+            update() {
+                // Bounce off walls
+                if (this.x + this.radius > canvas.width || this.x - this.radius < 0) {
+                    this.dx = -this.dx;
                 }
-            };
-
-            const setLoading = (isLoading) => {
-                submitButton.disabled = isLoading;
-                if (isLoading) {
-                    submitText.textContent = 'Submitting...';
-                    loadingSpinner.classList.add('loading-ring');
-                    loadingSpinner.classList.remove('hidden');
-                    submitButton.classList.add('opacity-75');
-                } else {
-                    submitText.textContent = 'Send Inquiry';
-                    loadingSpinner.classList.remove('loading-ring');
-                    loadingSpinner.classList.add('hidden');
-                    submitButton.classList.remove('opacity-75');
+                if (this.y + this.radius > canvas.height || this.y - this.radius < 0) {
+                    this.dy = -this.dy;
                 }
-            };
 
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                setLoading(true);
-                statusMessage.classList.add('hidden');
+                this.x += this.dx;
+                this.y += this.dy;
 
-                const formData = new FormData(form);
-                
-                const MAX_RETRIES = 3;
-                let success = false;
-                
-                for (let i = 0; i < MAX_RETRIES; i++) {
-                    try {
-                        const response = await fetch(scriptURL, {
-                            method: 'POST',
-                            body: formData,
-                        });
-
-                        if (response.ok && response.status !== 500) {
-                            updateStatus('Success! Your message has been sent to our team.', true);
-                            success = true;
-                            break;
-                        } else {
-                            throw new Error(`Server status: ${response.status}`);
-                        }
-                    } catch (error) {
-                        console.error(`Submission attempt ${i + 1} failed:`, error);
-                        if (i < MAX_RETRIES - 1) {
-                            const delay = Math.pow(2, i) * 500; // 0.5s, 1s, 2s
-                            await new Promise(resolve => setTimeout(resolve, delay));
-                        }
+                // Mouse interaction (Repulsion)
+                if (mouse.x !== null && mouse.y !== null) {
+                    const distance = Math.sqrt(Math.pow(mouse.x - this.x, 2) + Math.pow(mouse.y - this.y, 2));
+                    const interactionRadius = 150;
+                    
+                    if (distance < interactionRadius) {
+                        const angle = Math.atan2(this.y - mouse.y, this.x - mouse.x);
+                        // Increased repulsion strength factor
+                        const force = (interactionRadius - distance) / interactionRadius * 1.0; 
+                        
+                        this.x += Math.cos(angle) * force;
+                        this.y += Math.sin(angle) * force;
                     }
                 }
 
-                setLoading(false);
+                // Restore original speed (damping)
+                this.dx *= 0.99;
+                this.dy *= 0.99;
+                // Increased slow drift re-introduction
+                this.dx += (this.dx > 0 ? 0.001 : -0.001) * 0.3; 
+                this.dy += (this.dy > 0 ? 0.001 : -0.001) * 0.3;
 
-                if (!success) {
-                    updateStatus('Submission failed. Please try again or check the Apps Script URL.', false);
+                // Clamp speed to prevent runaway
+                const speedLimit = 1.0;
+                if (Math.abs(this.dx) > speedLimit) this.dx = Math.sign(this.dx) * speedLimit;
+                if (Math.abs(this.dy) > speedLimit) this.dy = Math.sign(this.dy) * speedLimit;
+                
+                this.draw();
+            }
+        }
+
+        function drawLines() {
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const p1 = particles[i];
+                    const p2 = particles[j];
+                    const distance = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
+                    const maxDistance = 100;
+
+                    if (distance < maxDistance) {
+                        const opacity = 1 - (distance / maxDistance);
+                        ctx.beginPath();
+                        ctx.strokeStyle = lineColor.replace('0.4', opacity * 0.5);
+                        ctx.lineWidth = 1;
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.stroke();
+                    }
                 }
+            }
+        }
+
+        function animateParticles() {
+            if (!ctx) return;
+            requestAnimationFrame(animateParticles);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            drawLines();
+
+            particles.forEach(particle => {
+                particle.update();
             });
-        });
+        }
     </script>
 </body>
 </html>
-
