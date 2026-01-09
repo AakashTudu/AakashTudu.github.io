@@ -877,6 +877,23 @@
         </div>
     </footer>
 
+    <script>
+      const scriptURL =                       
+      "https://script.google.com/macros/s/AKfycbxaExCu6q3XzcbyP8dv3RNG3bPGFt1myFzIsr3h3JlGyXFDhb4CvlKicgCskYeTER9Z/exec";
+      const form = document.forms["contact-form"];
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        var formData = new FormData(form);
+        fetch(scriptURL, { method: "POST", body: formData })
+          .then((response) => {
+            swal("Done", "Submitted Successfully.", "success");
+          })
+          .catch((error) => {
+            swal("Error", "Something went wrong. please try again!", "error");
+          });
+      });
+    </script>
+
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
         // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
@@ -1182,4 +1199,5 @@
         });
     </script>
 </body>
+
 </html>
