@@ -92,6 +92,55 @@
         .animate-up { animation: slideUp 0.4s ease-out; }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* BLUEPRINT OVERLAY */
+        #blueprint-layer {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: white; z-index: 9999; overflow-y: auto;
+            transition: opacity 0.5s;
+        }
+        .blueprint-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .flow-wrapper { display: flex; flex-direction: column; align-items: center; padding-top: 20px; }
+        .flow-step { display: flex; flex-direction: column; align-items: center; width: 100%; }
+        .step-box {
+            width: 280px; padding: 25px; border-radius: 12px; border: 2px solid #eee; background: white;
+            text-align: center; display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.2s;
+        }
+        .step-box:hover { transform: scale(1.02); border-color: var(--accent); }
+        .flow-arrow { font-size: 1.5rem; color: #ccc; margin: 15px 0; }
+
+        /* TIMELINE STYLES */
+        .timeline-wrapper { position: relative; padding: 20px 0; max-width: 800px; margin: 0 auto; }
+        .timeline-wrapper::before {
+            content: ''; position: absolute; top: 0; bottom: 0; left: 80px; width: 2px; background: #e9ecef;
+        }
+        .timeline-row { display: flex; margin-bottom: 60px; position: relative; }
+        .timeline-time { 
+            width: 80px; text-align: right; padding-right: 30px; font-weight: bold; color: #333; 
+            padding-top: 5px; font-size: 0.9rem; line-height: 1.2;
+        }
+        .timeline-dot {
+            width: 16px; height: 16px; border-radius: 50%; border: 3px solid white;
+            position: absolute; left: 73px; top: 5px; box-shadow: 0 0 0 2px #e9ecef; z-index: 2; background: #333;
+        }
+        .timeline-content { flex: 1; padding-left: 30px; }
+
+        /* THE INNOVATION CARD STYLE */
+        .innovation-card {
+            background: #f0f7ff;
+            border: 1px solid #cce5ff;
+            border-left: 4px solid #0071e3;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,113,227,0.1);
+            transition: transform 0.3s ease;
+        }
+        .innovation-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,113,227,0.15);
+        }
+
     </style>
 </head>
 <body>
@@ -107,6 +156,8 @@
             <a href="#slide6" class="nav-dot" title="Roadmap"></a>
             <a href="#slide7" class="nav-dot" title="Dashboard"></a>
             <a href="#slide8" class="nav-dot" title="Commercials"></a>
+            <a href="#slide9" class="nav-dot" title="Innovation"></a>
+            <a href="#slide10" class="nav-dot" title="Strategy"></a>
         </div>
 
         <section id="slide1" class="slide">
@@ -232,6 +283,7 @@
                     <h2>Strategic Roadmap</h2>
                     <p class="lead">A safe, phased rollout.</p>
                 </div>
+                
                 <div class="row g-4 align-items-stretch">
                     <div class="col-md-4" data-aos="fade-up" data-aos-delay="0">
                         <div class="roadmap-card">
@@ -240,12 +292,7 @@
                                 <h5 class="fw-bold mb-1">Pipeline</h5>
                                 <span class="badge bg-primary mb-3">Months 1-2</span>
                                 <hr>
-                                <ul class="list-unstyled small text-muted">
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Website Integration</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Applicant Gateway</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>DB Architecture</li>
-                                </ul>
-                                <div class="mt-4 p-2 bg-light rounded text-center small text-dark fw-bold">Goal: Zero Manual Entry</div>
+                                <p class="text-muted small">Website Integration. Applicant Gateway. Zero Manual Entry.</p>
                             </div>
                         </div>
                     </div>
@@ -256,12 +303,7 @@
                                 <h5 class="fw-bold mb-1">Compliance (MVP)</h5>
                                 <span class="badge bg-dark mb-3">Months 3-4</span>
                                 <hr>
-                                <ul class="list-unstyled small text-muted">
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Workflow Gating</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>File Locking</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Role Access Control</li>
-                                </ul>
-                                <div class="mt-4 p-2 bg-primary text-white rounded text-center small fw-bold">Goal: Secure Workflow/System</div>
+                                <p class="text-muted small">Workflow Gating. Evidence Uploads. File Locking & QA.</p>
                             </div>
                         </div>
                     </div>
@@ -272,16 +314,19 @@
                                 <h5 class="fw-bold mb-1">Intelligence</h5>
                                 <span class="badge bg-secondary mb-3">Month 5+</span>
                                 <hr>
-                                <ul class="list-unstyled small text-muted">
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Churn Prediction</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Auto-Grading</li>
-                                    <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Adv. Reporting</li>
-                                </ul>
-                                <div class="mt-4 p-2 bg-light rounded text-center small text-dark fw-bold">Goal: Scale & Efficiency</div>
+                                <p class="text-muted small">Churn Prediction Models. Auto-Grading. Adv. Reporting.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <div class="text-center mt-5" data-aos="fade-up">
+                    <p class="text-muted mb-3">Want to see exactly how the data flows?</p>
+                    <button onclick="openBlueprint()" class="btn btn-outline-dark rounded-pill px-5 py-3 fw-bold">
+                        <i class="fas fa-project-diagram me-2"></i> Explore System Logic
+                    </button>
+                </div>
+
             </div>
         </section>
 
@@ -455,6 +500,142 @@
             </div>
         </section>
 
+        <section id="slide9" class="slide bg-light">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-lg-5 mb-5 mb-lg-0" data-aos="fade-right">
+                        <span class="badge bg-white border text-primary mb-3">Beyond the Specification</span>
+                        <h2>Future-Proofing LEAD</h2>
+                        <p class="lead">My role isn't just to build what you asked for. It's to build what you <em>need</em> next.</p>
+                        <p class="text-secondary">
+                            Once the core system is stable (Phase 2), I propose three innovations to drive retention and automate the "boring stuff."
+                        </p>
+                        <div class="mt-4">
+                            <button class="btn btn-outline-dark rounded-pill px-4" disabled>Coming in Phase 3</button>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-7" data-aos="fade-left">
+                        <div class="row g-4">
+                            
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm p-4 h-100">
+                                    <div class="d-flex align-items-start">
+                                        <div class="bg-primary bg-opacity-10 text-primary rounded-circle p-3 me-3">
+                                            <i class="fas fa-robot fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold">1. The "Nightly AI Auditor"</h5>
+                                            <p class="text-muted small mb-2">
+                                                <strong>Problem:</strong> Humans miss unsigned documents.<br>
+                                                <strong>Solution:</strong> An OCR script runs every night at 3 AM. It scans every new PDF for signatures. If a signature is missing, it auto-flags the learner and emails the Compliance Manager before the real auditor arrives.
+                                            </p>
+                                            <span class="badge bg-light text-dark border">Risk Reduction</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm p-4 h-100">
+                                    <div class="d-flex align-items-start">
+                                        <div class="bg-success bg-opacity-10 text-success rounded-circle p-3 me-3">
+                                            <i class="fab fa-whatsapp fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold">2. WhatsApp "Nudge" Engine</h5>
+                                            <p class="text-muted small mb-2">
+                                                <strong>Problem:</strong> Learners ignore compliance emails.<br>
+                                                <strong>Solution:</strong> We integrate the Twilio API. If attendance drops below 85%, the system sends an automated WhatsApp: <em>"Hi Alex, we missed you today. Is everything okay?"</em>
+                                            </p>
+                                            <span class="badge bg-light text-dark border">Retention Boost</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm p-4 h-100">
+                                    <div class="d-flex align-items-start">
+                                        <div class="bg-warning bg-opacity-10 text-warning rounded-circle p-3 me-3">
+                                            <i class="fas fa-briefcase fa-2x"></i>
+                                        </div>
+                                        <div>
+                                            <h5 class="fw-bold">3. Auto-CV Matching</h5>
+                                            <p class="text-muted small mb-2">
+                                                <strong>Problem:</strong> Finding jobs for learners is manual work.<br>
+                                                <strong>Solution:</strong> The system parses the learner's CV skills (Python, SQL) and auto-matches them against live job APIs (Indeed/LinkedIn), presenting the Learner with a personalized "Jobs Feed" in their dashboard.
+                                            </p>
+                                            <span class="badge bg-light text-dark border">Outcome Generation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="slide10" class="slide bg-white">
+            <div class="container">
+                <div class="text-center mb-5" data-aos="fade-up">
+                    <span class="badge bg-light text-dark border px-3 py-2 rounded-pill mb-3">Our Philosophy</span>
+                    <h2>First Automation. Then Innovation.</h2>
+                    <p class="lead mx-auto" style="max-width: 700px;">
+                        We don't build AI on shaky foundations. Our priority is to eliminate manual friction first.
+                    </p>
+                </div>
+
+                <div class="row align-items-center justify-content-center g-5">
+                    
+                    <div class="col-lg-5" data-aos="fade-right">
+                        <div class="p-5 border rounded-4 bg-light position-relative overflow-hidden h-100">
+                            <div class="position-absolute top-0 end-0 p-4 opacity-25">
+                                <i class="fas fa-cogs fa-6x text-secondary"></i>
+                            </div>
+                            <h4 class="fw-bold mb-3">1. The Foundation</h4>
+                            <span class="badge bg-dark mb-4">Immediate Focus</span>
+                            <p class="text-muted">
+                                Before we deploy Machine Learning, we must ensure the data pipeline is flawless.
+                            </p>
+                            <ul class="list-unstyled text-secondary small">
+                                <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-dark me-3"></i> <span><strong>Digitize Forms:</strong> Kill the CSVs.</span></li>
+                                <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-dark me-3"></i> <span><strong>Enforce Rules:</strong> Stop bad data entry.</span></li>
+                                <li class="mb-3 d-flex align-items-center"><i class="fas fa-check-circle text-dark me-3"></i> <span><strong>Secure Storage:</strong> Lock the audit trails.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-1 text-center d-none d-lg-block" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-arrow-right fa-2x text-muted"></i>
+                    </div>
+
+                    <div class="col-lg-5" data-aos="fade-left">
+                        <div class="p-5 border border-primary rounded-4 bg-white shadow-lg position-relative overflow-hidden h-100">
+                            <div class="position-absolute top-0 end-0 p-4 opacity-10">
+                                <i class="fas fa-brain fa-6x text-primary"></i>
+                            </div>
+                            <h4 class="fw-bold text-primary mb-3">2. The Acceleration</h4>
+                            <span class="badge bg-primary mb-4">Phase 3 & Beyond</span>
+                            <p class="text-muted">
+                                Once workflows are stable, we inject AI to optimize outcomes.
+                            </p>
+                            <ul class="list-unstyled text-secondary small">
+                                <li class="mb-3 d-flex align-items-center"><i class="fas fa-bolt text-primary me-3"></i> <span><strong>Predictive Models:</strong> Spot churn early.</span></li>
+                                <li class="mb-3 d-flex align-items-center"><i class="fas fa-bolt text-primary me-3"></i> <span><strong>Auto-Grading:</strong> Reduce tutor workload.</span></li>
+                                <li class="mb-3 d-flex align-items-center"><i class="fas fa-bolt text-primary me-3"></i> <span><strong>Smart Matching:</strong> AI-driven career placement.</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+
+
         <section class="slide bg-dark text-white text-center" style="min-height: 50vh;">
             <div class="container" data-aos="fade-up">
                 <h2 class="mb-4">Let's get Ready to Build the Shield</h2>
@@ -527,6 +708,140 @@
         </div>
     </div>
 
+    <div id="blueprint-layer" style="display:none; opacity:0;">
+        <div class="blueprint-container">
+        
+        <div class="d-flex justify-content-between align-items-center mb-5 sticky-top bg-white py-3 border-bottom shadow-sm" style="z-index: 1000;">
+            <div>
+                <h4 class="fw-bold m-0"><i class="fas fa-layer-group text-primary me-2"></i> Workflow Architecture</h4>
+                <small class="text-muted">Comparing <span class="fw-bold text-dark">Standard Requirements</span> vs <span class="fw-bold text-primary">Proposed Innovations</span></small>
+            </div>
+            <button onclick="closeBlueprint()" class="btn btn-light btn-sm rounded-pill px-3 border"><i class="fas fa-times me-2"></i> Close</button>
+        </div>
+
+        <div class="timeline-wrapper">
+            
+            <div class="timeline-row">
+                <div class="timeline-time">Stage 1<br><span class="fw-normal text-muted">Onboarding</span></div>
+                <div class="timeline-dot bg-dark"></div>
+                <div class="timeline-content">
+                    
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-dark"><i class="fas fa-clipboard-check me-2"></i> Standard Requirement</h6>
+                            <p class="small text-muted mb-0">
+                                1. Applicant submits data via Website.<br>
+                                2. Eligibility is checked manually or via basic rules.<br>
+                                3. Documents uploaded to portal.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="badge bg-primary mb-2">My Innovation</div>
+                        <h6 class="fw-bold text-primary"><i class="fas fa-robot me-2"></i> The "AI Pre-Check"</h6>
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-1"><i class="fas fa-check-circle text-primary me-2"></i><strong>OCR Scanner:</strong> AI reads the passport expiry date instantly. Rejects invalid docs before a human sees them.</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i><strong>Lead Triage:</strong> Ineligible leads are auto-routed to the Sales Team for commercial upselling.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="timeline-row">
+                <div class="timeline-time">Stage 2<br><span class="fw-normal text-muted">Delivery</span></div>
+                <div class="timeline-dot bg-dark"></div>
+                <div class="timeline-content">
+                    
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-dark"><i class="fas fa-chalkboard-teacher me-2"></i> Standard Requirement</h6>
+                            <p class="small text-muted mb-0">
+                                1. Tutors mark attendance registers.<br>
+                                2. Admin chases absent students via email.<br>
+                                3. Assignments submitted to LMS.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="badge bg-primary mb-2">My Innovation</div>
+                        <h6 class="fw-bold text-primary"><i class="fab fa-whatsapp me-2"></i> WhatsApp Nudge Engine</h6>
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-1"><i class="fas fa-check-circle text-primary me-2"></i><strong>Auto-Chase:</strong> If marked 'Absent', system waits 1 hour then sends a WhatsApp message automatically.</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i><strong>Intervention Lock:</strong> If 2 assignments are missed, the system locks access to the next module until a Tutor call is booked.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="timeline-row">
+                <div class="timeline-time">Stage 3<br><span class="fw-normal text-muted">Assessment</span></div>
+                <div class="timeline-dot bg-dark"></div>
+                <div class="timeline-content">
+                    
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-dark"><i class="fas fa-pen-alt me-2"></i> Standard Requirement</h6>
+                            <p class="small text-muted mb-0">
+                                1. Tutor marks work.<br>
+                                2. Student views grade.<br>
+                                3. Grade is stored in database.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="badge bg-primary mb-2">My Innovation</div>
+                        <h6 class="fw-bold text-primary"><i class="fas fa-balance-scale me-2"></i> The "Dispute Ticket" System</h6>
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-1"><i class="fas fa-check-circle text-primary me-2"></i><strong>Review Window:</strong> Grades are "Provisional" for 48 hours. Students must click "Accept" or "Raise Ticket".</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i><strong>Change Audit:</strong> If a tutor changes a grade later, they <em>must</em> select a 'Reason Code' which is logged for the government auditor.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="timeline-row">
+                <div class="timeline-time">Stage 4<br><span class="fw-normal text-muted">Exit</span></div>
+                <div class="timeline-dot bg-dark"></div>
+                <div class="timeline-content">
+                    
+                    <div class="card border-0 shadow-sm mb-3">
+                        <div class="card-body">
+                            <h6 class="fw-bold text-dark"><i class="fas fa-graduation-cap me-2"></i> Standard Requirement</h6>
+                            <p class="small text-muted mb-0">
+                                1. Course completion check.<br>
+                                2. PDF Certificate generated.<br>
+                                3. File archived.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="innovation-card">
+                        <div class="badge bg-primary mb-2">My Innovation</div>
+                        <h6 class="fw-bold text-primary"><i class="fas fa-magic me-2"></i> AI Career Booster</h6>
+                        <ul class="list-unstyled small mb-0">
+                            <li class="mb-1"><i class="fas fa-check-circle text-primary me-2"></i><strong>Smart Certificate:</strong> PDF includes a QR code. Employers scan it to verify authenticity against the live database (Anti-Fraud).</li>
+                            <li><i class="fas fa-check-circle text-primary me-2"></i><strong>AI CV Updater:</strong> System appends verified skills to the student's CV automatically.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        
+        <div class="text-center py-5">
+            <button onclick="closeBlueprint()" class="btn btn-outline-dark rounded-pill px-5">Return to Presentation</button>
+        </div>
+
+    </div>
+</div>
+
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init({ duration: 800 });
@@ -554,12 +869,34 @@
             setTimeout(() => { packet.style.left = '90%'; document.getElementById('node4').classList.add('node-active'); }, 800);
         }
 
-        // --- Slide 5 Logic ---
+        // --- Slide 5 Logic (Scroll) ---
+        let userInteracted = false;
+        document.getElementById('att-slider').addEventListener('mousedown', () => userInteracted = true);
+        document.getElementById('late-slider').addEventListener('mousedown', () => userInteracted = true);
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section');
+            const dots = document.querySelectorAll('.nav-dot');
+            sections.forEach(sec => {
+                const top = window.scrollY; const offset = sec.offsetTop - 300; const height = sec.offsetHeight; const id = sec.getAttribute('id');
+                if(top >= offset && top < offset + height && id) { dots.forEach(d => d.classList.remove('active')); const target = document.querySelector(`a[href="#${id}"]`); if(target) target.classList.add('active'); }
+            });
+            if(userInteracted) return;
+            const section = document.getElementById('slide5');
+            const rect = section.getBoundingClientRect();
+            const windowHeight = window.innerHeight;
+            if(rect.top < windowHeight && rect.bottom > 0) {
+                let percentage = (windowHeight - rect.top) / (windowHeight + rect.height);
+                percentage = Math.max(0, Math.min(1, percentage));
+                document.getElementById('att-slider').value = 100 - (percentage * 40);
+                document.getElementById('late-slider').value = percentage * 10;
+                updateRisk();
+            }
+        });
         function updateRisk() {
             const att = document.getElementById('att-slider').value;
             const late = document.getElementById('late-slider').value;
-            document.getElementById('att-val').innerText = att + "%";
-            document.getElementById('late-val').innerText = late;
+            document.getElementById('att-val').innerText = Math.round(att) + "%";
+            document.getElementById('late-val').innerText = Math.round(late);
             let risk = 0; if (att < 90) risk += (90 - att) * 2; risk += (late * 5); if (risk > 100) risk = 100;
             document.getElementById('risk-text').innerText = Math.round(risk) + "%";
             document.getElementById('gauge-fill').style.transform = `rotate(${ -180 + (risk * 1.8) }deg)`;
@@ -580,8 +917,26 @@
         function uploadEvidence() { if(!appData.submitted) { alert("No applicant!"); return; } document.getElementById('comp-pending').style.display = 'none'; document.getElementById('comp-file').style.display = 'flex'; }
         function lockFile() { document.getElementById('btn-lock').innerText = "Locked"; document.getElementById('btn-lock').disabled = true; document.querySelector('.pill-red').classList.replace('pill-red', 'pill-green'); document.querySelector('.pill-green').innerText = "VERIFIED"; document.getElementById('tutor-status').classList.replace('bg-secondary', 'bg-success'); document.getElementById('tutor-status').innerText = "Enrolled"; document.getElementById('admin-note').className = "alert alert-success mt-3 small"; document.getElementById('admin-note').innerHTML = "Gate Open. Enrolled."; }
 
+        // BLUEPRINT LOGIC
+        function openBlueprint() {
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+            const bp = document.getElementById('blueprint-layer');
+            bp.style.display = 'block';
+            setTimeout(() => { bp.style.opacity = '1'; }, 100);
+        }
+
+        function closeBlueprint() {
+            document.body.style.overflow = 'auto';
+            const bp = document.getElementById('blueprint-layer');
+            bp.style.opacity = '0';
+            setTimeout(() => { bp.style.display = 'none'; }, 500);
+        }
+        
         // Scroll Spy
         window.addEventListener('scroll', () => { const sections = document.querySelectorAll('section'); const dots = document.querySelectorAll('.nav-dot'); sections.forEach(sec => { const top = window.scrollY; const offset = sec.offsetTop - 300; const height = sec.offsetHeight; const id = sec.getAttribute('id'); if(top >= offset && top < offset + height && id) { dots.forEach(d => d.classList.remove('active')); const target = document.querySelector(`a[href="#${id}"]`); if(target) target.classList.add('active'); } }); });
     </script>
+
+    
+
 </body>
 </html>
